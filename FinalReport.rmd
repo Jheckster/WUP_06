@@ -33,6 +33,8 @@ If not, then whose view differs from whom??
 # Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
+  
+This is a type of categorical problem, with at least one problem with multiple levels. To account for this we will use a Fisher test.
 
 # Results
 
@@ -47,6 +49,24 @@ If not, then whose view differs from whom??
 
 
 ## Now with The Most data (fewer variables gives more data points)
+  
+```{r}
+dd2 <- mydata %>% group_by(race,cappun) %>% summarize(count=n()) %>% mutate(prcnt=count/sum(count))
+
+
+# the group_by followed by summarize(count=n())
+
+basicC <- ggplot(dd2,aes(x=race,y=count,fill=cappun))
+basicC + geom_bar(stat="identity",position="dodge")
+
+#Now for percentage plot
+
+basicCC <- ggplot(dd2,aes(x=race,y=prcnt*100,fill=cappun)) 
+basicCC + geom_bar(stat="identity", position = "dodge")
+```
+  
+In this graph, the first slide displays the number of individuals categorized by races, white, black and other. The white race had the most with over 1500 reports, and the black and other races had less than 250 reports.
+In the last display the chart shows the percentage of the races in favor of capital punishment. Each category was compared to each other, the white was compared to support versus the opposition of capital punishment and was in favor of capital punishment by approximately 64%. The black race was in opposition, with a much lower percentage of around 57%. The other race was in favor of capital punishment with a near report for its opposition, the support percentage was around 55%.
 
 
 
